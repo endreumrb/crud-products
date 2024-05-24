@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-Route::get('/product', [ProductController::class, 'show'])->name('product.show');
+Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
 Route::get('/admin/products', [AdminController::class, 'index'])->name('admin.product.index');
 
