@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 
 use Illuminate\Http\Request;
@@ -21,16 +22,10 @@ class AdminController extends Controller
         return view('admin.product_create');
     }
 
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
         // Validar os dados do formulário
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'cover' => 'nullable|image|max:2048',
-            'price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-            'stock' => 'required|integer|min:0',
-        ]);
+        $validatedData = $request->validated();
 
         // Gerar o slug com base no nome do produto
         $slug = Str::slug($validatedData['name']);
@@ -60,16 +55,10 @@ class AdminController extends Controller
         return view('admin.product_edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ProductStoreRequest $request, Product $product)
     {
         // Validar os dados do formulário
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'cover' => 'nullable|image|max:2048',
-            'price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-            'stock' => 'required|integer|min:0',
-        ]);
+        $validatedData = $request->validated();
 
         // Gerar o slug com base no nome do produto, se não foi fornecido
         if (!$request->filled('slug')) {
